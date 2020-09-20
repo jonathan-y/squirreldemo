@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Zoho CRM Contacts Manager</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+	    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jqc-1.12.4/dt-1.10.22/b-1.6.4/sl-1.3.1/datatables.min.css"/>
+        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jqc-1.12.4/dt-1.10.22/b-1.6.4/sl-1.3.1/datatables.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="editor.dataTables.css">
+        <script type="text/javascript" src="dataTables.editor.js"></script>
+        	    
+	    <script type="text/javascript">
+            $(document).ready(function() {
+                
+                var editor = new $.fn.dataTable.Editor( {
+            		ajax: "/contacts",
+            		table: "#contacts",
+            		idSrc:  'id',
+            		fields: [
+            			{ label: "First", name: "First_Name" },
+            			{ label: "Last", name: "Last_Name" },
+            			{ label: "Email", name: "Email" },
+            			{ label: "Phone", name: "Phone" },
+            			{ label: "Mobile", name: "Mobile" },
+            			{ label: "Title", name: "Title" },
+            			{ label: "Address", name: "Mailing_Street" },
+            			{ label: "Postcode", name: "Mailing_Zip" },
+            			{ label: "Country", name: "Mailing_Country" }
+            		]
+                } );
+                
+            	$("#contacts").DataTable( {
+            		ajax: "/contacts",
+            		dom: "Bfrtip",
+            		columns: [
+            			{ data: "First_Name" },
+            			{ data: "Last_Name" },
+            			{ data: "Email" },
+            			{ data: "Phone" },
+            			{ data: "Mobile" },
+            			{ data: "Title" },
+            			{ data: "Mailing_Street" },
+            			{ data: "Mailing_Zip" },
+            			{ data: "Mailing_Country" }
+            		],
+                    select: true,
+                    buttons: [
+                        { extend: "create", editor: editor },
+                        { extend: "edit",   editor: editor },
+                        { extend: "remove", editor: editor }
+                    ]
+            	} );
+            	
+            } );
+	</script>
+
+	<style>
+	    body {
+	        padding: 50px;
+	    }       
+    </style>
+	
+    </head>
+    <body>
+        <h1>Zoho CRM Contacts Manager</h1>
+        <p>A Ruby/Sinatra application on AWS EC2 which dynamically retrieves contacts data from Zoho CRM using their REST API, and displays it interactively using the DataTables JavaScript library.<br />
+        <a href="https://github.com/jonathan-y/squirreldemo">View source on GitHub</a>
+        </p>
+        
+        <table id="contacts">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Mobile</th>
+                <th>Title</th>
+                <th>Address</th>
+                <th>Postcode</th>
+                <th>Country</th>
+            </tr>
+        </thead>
+    </table>
+    </body>
+</html>
